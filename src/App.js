@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import { 
-  Text, 
-  View, 
-  StyleSheet, 
-} from 'react-native';
-import ViewIsbn from './src/register/ViewIsbn';
-import SearchBookDetail from './src/register/SearchBookDetail';
-import RegisterBookResult from './src/register/RegistBookResult';
+import ViewIsbn from './register/register/ViewIsbn';
+import ViewBookDetail from './register/ViewBookDetail';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 'ISBNMODE',
+      mode: 'modeViewIsbn',
       data: [],
     };
   }
@@ -25,28 +19,19 @@ class App extends Component {
     const { mode, data } = this.state;
 
     switch (mode) {
-      case 'ISBNMODE': 
+      case 'modeViewIsbn': 
         return <ViewIsbn changeMode={this.changeMode} />;
-      case 'SEARCHMODE':
-        return <SearchBookDetail changeMode={this.changeMode} />;
-      case 'VIEWMODE': 
-        return <ViewBookDetail changeMode={this.changeMode} />;
-      case 'RESULTMODE': 
-        return <RegisterBookResult changeMode={this.changeMode} />;
+      // case 'modeSearchbookDetail':
+      //   return <SearchBookDetail changeMode={this.changeMode} />;
+      case 'modeViewBookDetail': 
+        return <ViewBookDetail changeMode={this.changeMode} data={data} />;
+      // case 'modeRegisterBookResult': 
+      //   return <RegisterBookResult changeMode={this.changeMode} />;
       default: 
         throw new error();
     }
   }
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
 
 export default App;

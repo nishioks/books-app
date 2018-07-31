@@ -7,36 +7,35 @@ import {
   View 
 } from 'react-native';
 
-import SearchBookDetail from './SearchBookDetail';
+import { getBookDetail } from './getBookDetail';
 
 class ViewIsbn extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isbn: '0123456789', 
+      isbn: '9784797392579', 
     }
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleSearch = () => {
-    const apiUrlBooks = 'http://10.0.3.2:3000/books';
-    
-    fetch(apiUrlBooks, {
-      method: 'GET'
-    })
-    .then(response => response.json() )
-    .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({
-        books: responseJson.books
-      });
-    })
-    .catch((error) => {
-      alert(error);
-    });
-  }
+  handleSearch = async (event) => {
+    event.preventDefault();
 
+    const dataBookDetail = await getBookDetail();
+
+    if (dataBookDetail.indexOf(this.state.isbn >= 0) {
+      // TODO: select record from DatabaseBooks.json
+      
+
+    } else {
+      // TODO: request AMAZON API
+
+    });
+
+    changeMode('modeViewBookDetail', dataBookDetail);
+  }
+  
   render () {
     return (
       <View style={styles.container}>
