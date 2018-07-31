@@ -13,12 +13,15 @@ import RegistBookResult from './src/RegistBookResult';
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isbn: '0123456789', 
       bookName: 'DeepLearningの本', 
       authors: '山田太郎', 
       books: [],
     };
+    this.handleRegister = this.handleRegister.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
   // changeMode = (mode, data) => {
@@ -27,7 +30,8 @@ class App extends Component {
   
   handleRegister() {
     // alert('新しい書籍を登録しました。' + '「' + this.state.isbn + '」「' + this.state.bookName + '」「' + this.state.authors + '」');
-    const apiUrlBooks = 'https://192.168.179.9:3000/books';
+    const apiUrlBooks = 'http://10.0.3.2:3000/books';
+
     return fetch(apiUrlBooks, {
       method: 'POST',
       body: JSON.stringify({
@@ -43,7 +47,6 @@ class App extends Component {
     })
     .then((response) => response.json())
     .catch((error) => {
-      console.log('postエラー!');
       console.log(error);
       alert(error);
     });
@@ -55,25 +58,27 @@ class App extends Component {
   //   this.setState({[key]: bookValue});
   // }
 
-  getData() {
-    const apiUrlBooks = 'https://192.168.179.9:3000/books';
+  getData = () => {
+    const apiUrlBooks = 'http://10.0.3.2:3000/books';
+
     fetch(apiUrlBooks, {
       method: 'GET'
     })
     .then(response => response.json() )
-    .then((responseJson) => 
-    this.setState({
-      books: responseJson.books
+    .then((responseJson) => {
+      console.log(responseJson);
+      console.log(responseJson.length);
+      this.setState({
+        books: responseJson.books
+      });
     })
-  )
     .catch((error) => {
       alert(error);
-      console.log('getエラー!!!');
       console.log(error);
     });
   }
 
-  renderList() {
+  renderList = () => {
     return this.state.books.map(book =>
       <RegistBookResult key={book.book_id} book={book} />
     );
@@ -81,36 +86,32 @@ class App extends Component {
 
   render() {
     return (
-    <View style={styles.container}>
-    <Text>ISBN:</Text>
-    <TextInput 
-      value={this.state.isbn} 
-      onChangeText={(value) => this.setState({isbn: value})} 
-    />
-    <Text>本のタイトル:</Text>
-    <TextInput 
-      value={this.state.bookName} 
-      onChangeText={(value) => this.setState({bookName: value})} />
-    <Text>著者:</Text>
-    <TextInput 
-      value={this.state.authors} 
-      onChangeText={(value) => this.setState({authors: value})} />
-    <Text>この書籍を新規登録します。 </Text>
-    <Button 
-      title="登録(POST)" 
-      onPress={this.handleRegister.bind(this)} />
-    <Button 
-      title="閲覧(GET)" 
-      onPress={this.getData.bind(this)}  />
-    {/* <Button 
-      title="登録(POST)" 
-      onPress={this.postData.bind(this)}  />
-    <ScrollView>
-      <Card title="HTTP TEST">
-        {this.renderList()}
-      </Card>
-    </ScrollView> */}
-  </View>
+      <View style={styles.container}>
+        <Text>ISBN:</Text>
+        <TextInput 
+          value={this.state.isbn} 
+          onChangeText={(value) => this.setState({isbn: value})} />
+        <Text>本のタイトル:</Text>
+        <TextInput 
+          value={this.state.bookName} 
+          onChangeText={(value) => this.setState({bookName: value})} />
+        <Text>著者:</Text>
+        <TextInput 
+          value={this.state.authors} 
+          onChangeText={(value) => this.setState({authors: value})} />
+        <Text>この書籍を新規登録します。 </Text>
+        <Button 
+          title="登録(POST)" 
+          onPress={this.handleRegister} />
+        <Button 
+          title="閲覧(GET)" 
+          onPress={this.getData}  />
+        {/* <ScrollView>
+          <Card title="HTTP TEST">
+            {this.renderList()}
+          </Card>
+        </ScrollView> */}
+      </View>
     );
   }
 }
