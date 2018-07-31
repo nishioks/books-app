@@ -1,0 +1,22 @@
+{
+    "dateDueSlips": [
+        { 
+            "id": 1,
+            "book_id": "e98fc736-d081-4c26-8d33-0c5939947358",
+            "book_num": "0000000000001",
+            "isbn": 9784802611145, 
+            "book_name": "0から学ぶDeepLearning", 
+            "status": "onLoan", 
+            "borrower": "nishioks"
+        }, 
+        { 
+            "id": 2,
+            "book_id": "afe7b394-6e57-46cf-ba51-e3674287e0ff",
+            "book_num": "0000000000002",
+            "isbn": 9784797392579, 
+            "book_name": "機械学習", 
+            "status": "returned", 
+            "borrower": "iwasawamn"
+        }
+    ]
+}
