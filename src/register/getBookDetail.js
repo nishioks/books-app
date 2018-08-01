@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
-import fetch from 'react-fetch';
+const getBookDetail = async (isbn) => {
+  // TODO: Now you are using param - ?isbn= - depending on how to use json-server
+  // if you create the backend, you might change the code on how to use the backend.
+  const apiUrlBooks = `http://10.0.3.2:3000/books?isbn=${isbn}`;
 
-const gethBookDetail = async () => {
-  const apiUrlBooks = 'http://10.0.3.2:3000/books';
-
-  fetch(apiUrlBooks, {
-    method: 'GET'
+  return fetch(apiUrlBooks, {
+    method: 'GET',
   })
-  .then(response => response.json() )
-  .then((responseJson) => {
-    console.log(responseJson);
-    this.setState({
-      books: responseJson.books
+    .then(response => response.json())
+    .catch((error) => {
+      alert(error);
     });
-  })
-  .catch((error) => {
-    alert(error);
-  });
-}
+};
 
 export default getBookDetail;

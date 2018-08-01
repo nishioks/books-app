@@ -4115,7 +4115,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.0, isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -6095,12 +6095,6 @@ react-devtools-core@3.1.0:
 react-display-name@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.0.tgz#0e1f7086e45a32d07764df35ed32ff16f1259790"
-
-react-fetch@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/react-fetch/-/react-fetch-0.0.9.tgz#d48ee0474386ed162b3b1c24ea7382a5c871863e"
-  dependencies:
-    isomorphic-fetch "^2.1.0"
 
 react-google-maps@^7.3.0:
   version "7.3.0"

@@ -1,63 +1,12 @@
 import React, { Component } from 'react';
-import { 
-  StyleSheet, 
-  TextInput, 
-  Text, 
-  Button, 
-  View 
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  Button,
+  View,
 } from 'react-native';
-
-class ViewBookDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isbn: '',
-      bookName: '',
-      authors: '',
-      publishers: '',
-      publicationDate: ''
-    }
-    this.handleRegister = this.handleRegister.bind(this);
-  }
-
-  handleRegister = async(event) => {
-    event.preventDefault();
-
-    const dataRegisterBook = await postRegisterBook();
-
-  }
-
-  render () {
-    return (
-      <View style={styles.container}>
-        <Text>ISBN:</Text>
-        <TextInput 
-          value={this.state.isbn} 
-          onChangeText={(value) => this.setState({isbn: value})} />
-        <Text>書籍タイトル:</Text>
-        <TextInput 
-          value={this.state.bookName} 
-          onChangeText={(value) => this.setState({bookName: value})} />
-        <Text>著者:</Text>
-        <TextInput 
-          value={this.state.authors} 
-          onChangeText={(value) => this.setState({authors: value})} />
-        <Text>出版社:</Text>
-        <TextInput 
-          value={this.state.publishers} 
-          onChangeText={(value) => this.setState({publishers: value})} />
-        <Text>発行年:</Text>
-        <TextInput 
-          value={this.state.publicationDate} 
-          onChangeText={(value) => this.setState({publicationDate: value})} />
-        <Button 
-          title="新しい書籍として登録" 
-          onPress={this.handleRegister} />
-      </View>                
-    );
-  }   
-}
+import postRegisterBook from './postRegisterBook';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,7 +14,74 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
+
+class ViewBookDetail extends Component {
+  constructor(props) {
+    super(props);
+
+    const { dataBookDetail } = this.props;
+
+    // もしかしたらJson-serverにデータがないときに、empty arrayだとTrueと判断されるので、
+    // よろしく直すべし。
+    if (dataBookDetail) {
+      const targetBook = {};
+      Object.keys(dataBookDetail).forEach((eachKey) => {
+        targetBook[eachKey] = dataBookDetail[eachKey];
+      });
+
+      this.state = targetBook;
+    } else {
+      this.state = {
+        id: null,
+        book_id: '',
+        book_num: null,
+        isbn: null,
+        book_name: '',
+        authors: '',
+        publishers: '',
+        publication_date: null,
+        lost_flag: false,
+      };
+    }
+  }
+
+  handleRegister = async (event) => {
+    event.preventDefault();
+
+    const dataRegisterBook = await postRegisterBook(this.state);
+  }
+
+  render() {
+    const { dataBookDetail } = this.props;
+
+    const array = Object.keys(dataBookDetail);
+
+    return (
+      <View style={styles.container}>
+        {array.map(eachKey => (
+          <React.Fragment>
+            <Text>
+              {eachKey}
+            </Text>
+            <TextInput
+              value={this.state[eachKey]}
+              onChangeText={(value) => {
+                const newState = {};
+                newState[eachKey] = value;
+                this.setState(newState);
+              }}
+            />
+          </React.Fragment>
+        ))}
+        <Button
+          title="新しい書籍として登録"
+          onPress={this.handleRegister}
+        />
+      </View>
+    );
+  }
+}
 
 export default ViewBookDetail;
